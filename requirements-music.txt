@@ -1,0 +1,6 @@
+# Optional voice-chat music/video dependencies.
+# Note: py-tgcalls pulls native ntgcalls. This is usually OK on Windows/Linux VPS
+# with supported wheels, but often fails on Termux/Python 3.13 because Android
+# wheels are not published and ntgcalls must compile from source.
+-r requirements.txt
+py-tgcalls==2.2.10
