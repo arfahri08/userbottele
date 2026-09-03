@@ -1,13 +1,28 @@
-# Modulogic Userbot Telethon
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=32&duration=2800&pause=900&color=F05A47&center=true&vCenter=true&width=700&lines=Modulogic+by+Fahri;Telegram+Automation+%7C+Telethon;Build.+Automate.+Stay+Curious." alt="Modulogic by Fahri animated title">
+</p>
 
-Userbot Telegram berbasis [Telethon](https://github.com/LonamiWebs/Telethon) untuk otomasi pribadi: auto-reply, AFK, anti-delete, anti-view-once, restricted media, downloader, reminder, dan beberapa utilitas Telegram.
+<p align="center">
+  <strong>Modular tools for a smarter Telegram workflow.</strong><br>
+  Built with Python and Telethon for personal automation.
+</p>
+
+<p align="center">
+  <a href="https://github.com/arfahri08/userbottele"><img src="https://img.shields.io/github/stars/arfahri08/userbottele?style=for-the-badge&logo=github&label=Stars&color=F5B942" alt="GitHub stars"></a>
+  <a href="https://github.com/arfahri08/userbottele/network/members"><img src="https://img.shields.io/github/forks/arfahri08/userbottele?style=for-the-badge&logo=github&label=Forks&color=4C9AFF" alt="GitHub forks"></a>
+  <a href="https://github.com/arfahri08/userbottele"><img src="https://img.shields.io/github/last-commit/arfahri08/userbottele?style=for-the-badge&logo=git&label=Updated&color=36B37E" alt="Last commit"></a>
+</p>
+
+<p align="center">
+  <a href="https://www.instagram.com/antoniusfahri"><img src="https://img.shields.io/badge/Instagram-antoniusfahri-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram Antonius Fahri"></a>
+  <a href="https://www.linkedin.com/in/a-rachman-fahri-9998443b8"><img src="https://img.shields.io/badge/LinkedIn-A._Rachman_Fahri-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn A. Rachman Fahri"></a>
+</p>
 
 > **Catatan penting:** project ini dirancang untuk penggunaan pribadi pada akun Anda sendiri. Hormati privasi, hak cipta, aturan Telegram, dan izin pemilik konten.
 
-<p align="center">
-  <a href="https://www.instagram.com/antoniusfahri"><img src="https://img.shields.io/badge/Instagram-antoniusfahri-E4405F?logo=instagram&logoColor=white" alt="Instagram Antonius Fahri"></a>
-  <a href="https://www.linkedin.com/in/a-rachman-fahri-9998443b8"><img src="https://img.shields.io/badge/LinkedIn-A._Rachman_Fahri-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn A. Rachman Fahri"></a>
-</p>
+## Tentang Modulogic
+
+Modulogic adalah userbot Telegram modular yang menjaga otomasi tetap teratur: setiap fitur hidup sebagai plugin terpisah, konfigurasi tetap jelas, dan data pribadi tetap berada di lingkungan lokal Anda.
 
 ## Fitur
 
