@@ -2,6 +2,9 @@
 .env
 .env.local
 .env.*.local
+.env.production
+.env.development
+.env.staging
 
 # Python
 __pycache__/
@@ -31,6 +34,18 @@ wheels/
 # Telethon session
 *.session
 *.session-journal
+
+# Private credentials and deployment files
+*.pem
+*.ppk
+*.key
+*.crt
+*.p12
+*.secret
+credentials/
+secrets/
+**/sftp.json
+**/ftp.json
 
 # IDE
 .vscode/

@@ -1,0 +1,177 @@
+# Modulogic Userbot Telethon
+
+Userbot Telegram berbasis [Telethon](https://github.com/LonamiWebs/Telethon) untuk otomasi pribadi: auto-reply, AFK, anti-delete, anti-view-once, restricted media, downloader, reminder, dan beberapa utilitas Telegram.
+
+> **Catatan penting:** project ini dirancang untuk penggunaan pribadi pada akun Anda sendiri. Hormati privasi, hak cipta, aturan Telegram, dan izin pemilik konten.
+
+<p align="center">
+  <a href="https://www.instagram.com/antoniusfahri"><img src="https://img.shields.io/badge/Instagram-antoniusfahri-E4405F?logo=instagram&logoColor=white" alt="Instagram Antonius Fahri"></a>
+  <a href="https://www.linkedin.com/in/a-rachman-fahri-9998443b8"><img src="https://img.shields.io/badge/LinkedIn-A._Rachman_Fahri-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn A. Rachman Fahri"></a>
+</p>
+
+## Fitur
+
+- Arsitektur runtime tunggal berbasis Telethon.
+- Auto-load plugin dari folder `modules/`.
+- Auto-reply, AFK, reminder, menu, ping, purge, dan get ID.
+- Anti-delete untuk pesan private yang terhapus.
+- Anti-view-once untuk media yang diterima secara private.
+- Penanganan restricted/no-forward media, termasuk album.
+- Deteksi paid media tanpa mencoba melewati paywall Telegram.
+- Downloader dan pengambil media dari link Telegram.
+- Tujuan terpusat untuk log dan media: Saved Messages atau channel pribadi Anda.
+
+## Persyaratan
+
+- Python 3.10 atau lebih baru
+- Akun Telegram pribadi
+- API ID dan API hash dari [my.telegram.org](https://my.telegram.org)
+- Channel pribadi opsional untuk menampung log dan media
+
+## Instalasi Lokal
+
+### 1. Clone repository
+
+```bash
+git clone https://github.com/arfahri08/userbottele.git
+cd userbottele
+```
+
+### 2. Buat virtual environment
+
+Windows PowerShell:
+
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+py -3 -m pip install -r requirements.txt
+```
+
+Linux, macOS, atau Termux:
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python3 -m pip install -r requirements.txt
+```
+
+Untuk fitur musik, instal tambahan:
+
+```bash
+python3 -m pip install -r requirements-music.txt
+```
+
+### 3. Siapkan environment
+
+Salin `.env.example` menjadi `.env`, lalu isi nilai milik Anda sendiri:
+
+```bash
+cp .env.example .env
+```
+
+Di Windows PowerShell, gunakan:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Nilai yang wajib diganti:
+
+- `API_ID`: API ID dari akun Telegram Anda.
+- `API_HASH`: API hash dari akun Telegram Anda.
+- `PHONE_NUMBER`: nomor Telegram Anda dengan kode negara, misalnya `+62...`.
+
+Jangan pernah memasukkan API hash, nomor telepon, password, token, atau file session ke repository publik.
+
+### 4. Atur channel tujuan (opsional)
+
+Secara default, log dan media dikirim ke Saved Messages. Untuk memindahkannya ke channel pribadi:
+
+1. Tambahkan akun userbot sebagai anggota channel dan beri izin mengirim media.
+2. Jalankan userbot.
+3. Ketik `.id` di channel tersebut.
+4. Salin `Channel ID` yang ditampilkan.
+5. Buka `config.py` dan isi:
+
+```python
+SAVED_MESSAGES_TARGET_ID = -1001234567890
+```
+
+Atau atur melalui `.env`:
+
+```env
+SAVED_MESSAGES_TARGET=-1001234567890
+```
+
+Nilai `.env` akan meng-override nilai di `config.py`. Jika nilainya `0`, output kembali ke Saved Messages.
+
+### 5. Jalankan
+
+```bash
+python index.py
+```
+
+Pada login pertama, masukkan kode verifikasi Telegram. File `userbot_session.session` akan dibuat secara lokal dan sengaja tidak diikutkan ke Git.
+
+## Menjalankan di Termux
+
+Gunakan script yang tersedia:
+
+```bash
+bash setup_termux.sh
+bash QUICK_START_TERMUX.sh
+```
+
+Pastikan `.env` dan file session hanya berada di perangkat/server pribadi Anda.
+
+## Konfigurasi Fitur
+
+Fitur dapat diaktifkan atau dimatikan melalui `.env` dengan nilai `True` atau `False`, misalnya:
+
+```env
+ANTI_DELETE_ENABLED=True
+ANTI_VIEWONCE_ENABLED=True
+RESTRICTED_CHANNEL_ENABLED=True
+LOGGER_ENABLED=True
+TELEGRAM_MEDIA_LINK_ENABLED=True
+```
+
+Lihat `.env.example` untuk daftar konfigurasi yang tersedia.
+
+## Keamanan Sebelum Repository Publik
+
+File berikut sengaja diabaikan oleh Git:
+
+- `.env` dan konfigurasi environment lokal
+- File session Telegram
+- Password SFTP/FTP dan file kunci pribadi
+- Folder `downloads/` dan cache runtime
+- Log serta riwayat identitas lokal
+
+Sebelum push, periksa file yang akan dikirim:
+
+```bash
+git status --short
+git diff --cached --name-only
+```
+
+Jika credential pernah terlanjur masuk commit, segera cabut atau rotate credential tersebut. Menghapus file pada commit terbaru saja tidak menghapusnya dari seluruh riwayat Git.
+
+## Update ke GitHub
+
+```bash
+git add -A
+git commit -m "Describe your change"
+git push
+```
+
+## Lisensi
+
+Tambahkan lisensi yang sesuai sebelum mendistribusikan project ini secara luas.
+
+## Kontak
+
+Ikuti update dan project lainnya:
+
+- Instagram: [@antoniusfahri](https://www.instagram.com/antoniusfahri)
+- LinkedIn: [A. Rachman Fahri](https://www.linkedin.com/in/a-rachman-fahri-9998443b8)
