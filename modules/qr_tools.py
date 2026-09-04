@@ -5,7 +5,6 @@ Generate QR code images locally.
 from io import BytesIO
 from pathlib import Path
 
-import cv2
 import qrcode
 from telethon import TelegramClient, events
 
@@ -45,6 +44,15 @@ async def setup_plugin(client: TelegramClient):
     @client.on(events.NewMessage(outgoing=True))
     async def read_qr_handler(event):
         if not is_user_command(event, "readqr", "decodeqr"):
+            return
+
+        try:
+            import cv2
+        except ImportError:
+            await event.edit(
+                "Fitur .readqr membutuhkan dependency opsional.\n"
+                "Install: pip install -r requirements-qr.txt"
+            )
             return
 
         reply = await event.get_reply_message()

@@ -77,6 +77,14 @@ Untuk fitur musik, instal tambahan:
 python3 -m pip install -r requirements-music.txt
 ```
 
+Untuk mengaktifkan pembacaan QR dari gambar (`.readqr`), instal dependency opsional:
+
+```bash
+python3 -m pip install -r requirements-qr.txt
+```
+
+Fitur `.qr` untuk membuat QR tetap tersedia tanpa dependency OpenCV. OpenCV hanya diperlukan oleh `.readqr`.
+
 ### 3. Siapkan environment
 
 Salin `.env.example` menjadi `.env`, lalu isi nilai milik Anda sendiri:
