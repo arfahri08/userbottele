@@ -15,6 +15,10 @@ from config import (
     TELEGRAM_MEDIA_LINK_ENABLED,
     USERNAME_TRACKER_ENABLED,
     PAID_MEDIA_GUARD_ENABLED,
+    MEDIA_MANAGER_ENABLED,
+    POLL_REACTION_ENABLED,
+    QR_TOOLS_ENABLED,
+    HEALTH_MONITOR_ENABLED,
 )
 
 # Dipertahankan sebagai compatibility shim untuk modul lama, tetapi sengaja
@@ -221,6 +225,42 @@ FEATURES: Tuple[FeatureInfo, ...] = (
         icon="🔄",
         commands=(".upt",),
         startup_enabled=True,
+    ),
+    FeatureInfo(
+        key="media_manager",
+        title="Media Manager",
+        description="Lihat penggunaan downloads dan hapus file lama.",
+        module_file="media_manager.py",
+        icon="💾",
+        commands=(".disk", ".cleanup [hari]"),
+        startup_enabled=MEDIA_MANAGER_ENABLED,
+    ),
+    FeatureInfo(
+        key="poll_reaction",
+        title="Poll & Reaction",
+        description="Buat poll dan beri reaction pada pesan.",
+        module_file="poll_reaction.py",
+        icon="📊",
+        commands=(".poll pertanyaan | opsi 1 | opsi 2", ".react 👍 (reply)"),
+        startup_enabled=POLL_REACTION_ENABLED,
+    ),
+    FeatureInfo(
+        key="qr_tools",
+        title="QR Tools",
+        description="Buat QR code dari teks atau link.",
+        module_file="qr_tools.py",
+        icon="🔳",
+        commands=(".qr <teks/link>", ".readqr (reply gambar)"),
+        startup_enabled=QR_TOOLS_ENABLED,
+    ),
+    FeatureInfo(
+        key="health_monitor",
+        title="Health Monitor",
+        description="Cek koneksi, uptime, RAM, CPU, dan perubahan koneksi.",
+        module_file="health_monitor.py",
+        icon="🩺",
+        commands=(".health",),
+        startup_enabled=HEALTH_MONITOR_ENABLED,
     ),
 )
 

@@ -35,6 +35,7 @@ Modulogic adalah userbot Telegram modular yang menjaga otomasi tetap teratur: se
 - Deteksi paid media tanpa mencoba melewati paywall Telegram.
 - Downloader dan pengambil media dari link Telegram.
 - Tujuan terpusat untuk log dan media: Saved Messages atau channel pribadi Anda.
+- Media manager, poll/reaction tools, QR generator, permission guard, dan health monitor.
 
 ## Persyaratan
 
@@ -152,6 +153,20 @@ TELEGRAM_MEDIA_LINK_ENABLED=True
 ```
 
 Lihat `.env.example` untuk daftar konfigurasi yang tersedia.
+
+## Command Tambahan
+
+```text
+.disk                         Lihat ukuran folder downloads/
+.cleanup 7                    Hapus file downloads yang lebih lama dari 7 hari
+.poll Pertanyaan | Ya | Tidak Buat poll Telegram
+.react 👍                     Beri reaction pada pesan yang direply
+.qr https://contoh.com        Buat QR code dari teks atau link
+.readqr                       Baca QR dari gambar yang direply
+.health                       Lihat koneksi, uptime, RAM, dan CPU
+```
+
+Untuk membatasi command agar hanya berjalan di chat tertentu, isi `COMMAND_ALLOWED_CHAT_IDS` dengan ID chat yang dipisahkan koma. Kosong berarti command tetap tersedia di semua chat, tetapi hanya command outgoing dari akun userbot yang diproses.
 
 ## Keamanan Sebelum Repository Publik
 
