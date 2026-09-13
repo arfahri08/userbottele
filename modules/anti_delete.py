@@ -24,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 DOWNLOAD_DIR = Path("downloads") / "deleted_messages"
 MAX_CACHE_SIZE = 1000
-MAX_CACHE_AGE_SECONDS = 6 * 3600
+MAX_CACHE_AGE_SECONDS = 30 * 60  # 30 menit – cukup untuk menangkap penghapusan, tidak boros storage
+CLEANUP_INTERVAL_SECONDS = 10 * 60  # cleanup tiap 10 menit
 TEXT_PREVIEW_LIMIT = 1800
 CAPTION_TEXT_LIMIT = 450
 
@@ -380,10 +381,25 @@ async def setup_plugin(client: TelegramClient):
             logger.error("Error di anti-delete handler: %s", e)
             logger.exception(e)
 
+    def _purge_orphan_downloads():
+        """Hapus file sisa dari sesi atau crash sebelumnya yang tidak sempat dibersihkan."""
+        if not DOWNLOAD_DIR.exists():
+            return
+        removed = 0
+        for f in DOWNLOAD_DIR.iterdir():
+            try:
+                if f.is_file():
+                    f.unlink(missing_ok=True)
+                    removed += 1
+            except Exception as e:
+                logger.debug("Gagal hapus orphan file %s: %s", f, e)
+        if removed:
+            logger.info("Anti-delete startup: %s file orphan dihapus dari %s", removed, DOWNLOAD_DIR)
+
     async def cleanup_old_messages():
         while True:
             try:
-                await asyncio.sleep(3600)
+                await asyncio.sleep(CLEANUP_INTERVAL_SECONDS)
                 current_time = datetime.now()
                 removed = 0
 
@@ -407,5 +423,6 @@ async def setup_plugin(client: TelegramClient):
             except Exception as e:
                 logger.error("Error di anti-delete cleanup: %s", e)
 
+    _purge_orphan_downloads()
     asyncio.create_task(cleanup_old_messages())
     logger.info("Anti-delete module loaded")

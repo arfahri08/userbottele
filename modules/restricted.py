@@ -11,13 +11,7 @@ from telethon import TelegramClient, events
 
 from config import RESTRICTED_CHANNEL_ENABLED
 from config import SAVED_MESSAGES_TARGET
-from modules.feature_state import WATERMARK_LINE
-from modules.helpers import (
-    SAVED_CONTENT_MARKER,
-    TOOK_BY_USERBOT,
-    has_downloadable_message_media,
-    inspect_message_extended_media,
-)
+from modules.helpers import has_downloadable_message_media, inspect_message_extended_media
 
 logger = logging.getLogger(__name__)
 
@@ -35,14 +29,11 @@ def _is_paid_media(message) -> bool:
     return inspect_message_extended_media(message) is not None
 
 
-def _saved_caption(source_title: str) -> str:
-    lines = [
-        "🔒 ANTI-FORWARD / PROTECTED CONTENT",
-        "━━━━━━━━━━━━━━━━━━━━",
-        f"💬 Sumber: {source_title}",
-    ]
-    lines.extend(["", f"📥 {TOOK_BY_USERBOT}", WATERMARK_LINE, SAVED_CONTENT_MARKER])
-    return "\n".join(lines)[:1024]
+def _saved_caption(source_title: str, message=None) -> str:
+    original_caption = (getattr(message, "text", None) or "").strip()
+    lines = [original_caption] if original_caption else []
+    lines.append(f"💬 Sumber: {source_title}")
+    return "\n\n".join(lines)[:1024]
 
 
 async def save_restricted_message_to_saved(
@@ -55,7 +46,7 @@ async def save_restricted_message_to_saved(
     if not has_downloadable_message_media(message) or _is_paid_media(message):
         return False
 
-    caption = _saved_caption(source_title)
+    caption = _saved_caption(source_title, message)
 
     DOWNLOAD_DIR.mkdir(exist_ok=True)
     file_path = await client.download_media(message, file=DOWNLOAD_DIR)
@@ -99,10 +90,11 @@ async def save_restricted_album_to_saved(
             logger.warning("Media album protected dari %s tidak dapat di-download", source_title)
             return False
 
+        captions = [_saved_caption(source_title, message) for message in messages]
         await client.send_file(
             SAVED_MESSAGES_TARGET,
             downloaded_files,
-            caption=_saved_caption(source_title),
+            caption=captions,
         )
         return True
     finally:
@@ -121,7 +113,23 @@ async def setup_plugin(client: TelegramClient):
         return
 
     DOWNLOAD_DIR.mkdir(exist_ok=True)
+
+    def _purge_orphan_downloads():
+        """Hapus file sisa dari sesi atau crash sebelumnya di folder downloads/."""
+        removed = 0
+        for f in DOWNLOAD_DIR.iterdir():
+            try:
+                if f.is_file():
+                    f.unlink(missing_ok=True)
+                    removed += 1
+            except Exception as e:
+                logger.debug("Gagal hapus orphan restricted file %s: %s", f, e)
+        if removed:
+            logger.info("Restricted startup: %s file orphan dihapus dari %s", removed, DOWNLOAD_DIR)
+
+    _purge_orphan_downloads()
     pending_albums = {}
+
     album_tasks = {}
     album_lock = asyncio.Lock()
 

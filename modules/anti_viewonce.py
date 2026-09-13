@@ -75,6 +75,19 @@ async def setup_plugin(client: TelegramClient):
         logger.info("Anti-viewonce module loaded (DISABLED)")
         return
 
+    # Bersihkan file sisa dari sesi sebelumnya (crash/restart)
+    if DOWNLOAD_DIR.exists():
+        removed = 0
+        for f in DOWNLOAD_DIR.iterdir():
+            try:
+                if f.is_file():
+                    f.unlink(missing_ok=True)
+                    removed += 1
+            except Exception:
+                pass
+        if removed:
+            logger.info("Anti-viewonce startup: %s file orphan dihapus dari %s", removed, DOWNLOAD_DIR)
+
     @client.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
     async def anti_viewonce_handler(event):
         try:
